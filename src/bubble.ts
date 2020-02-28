@@ -86,8 +86,8 @@ export class Bubble {
 
     private applyWallBounce(): void {
         // left wall
-        if (this.position.x < 0) {
-            const xDiff = -2 * this.position.x;
+        if (this.position.x < this.heat) {
+            const xDiff = -2 * (this.position.x - this.heat);
             this.position = this.position.add(new Vector(
                 xDiff, 0
             ));
@@ -97,8 +97,8 @@ export class Bubble {
         }
 
         // top wall
-        if (this.position.y < 0) {
-            const yDiff = -2 * this.position.y;
+        if (this.position.y < this.heat) {
+            const yDiff = -2 * (this.position.y - this.heat);
             this.position = this.position.add(new Vector(
                 0, yDiff
             ));
@@ -108,8 +108,8 @@ export class Bubble {
         }
 
         // right wall
-        if (this.position.x > window.innerWidth) {
-            const xDiff = -2 * (this.position.x - window.innerWidth);
+        if (this.position.x > window.innerWidth - this.heat) {
+            const xDiff = -2 * (this.position.x + this.heat - window.innerWidth);
             this.position = this.position.add(new Vector(
                 xDiff, 0
             ));
@@ -119,8 +119,8 @@ export class Bubble {
         }
 
         // bottom wall
-        if (this.position.y > window.innerHeight) {
-            const yDiff = -2 * (this.position.y - window.innerHeight);
+        if (this.position.y > window.innerHeight - this.heat) {
+            const yDiff = -2 * (this.position.y + this.heat - window.innerHeight);
             this.position = this.position.add(new Vector(
                 0, yDiff
             ));
