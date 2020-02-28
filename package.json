@@ -4,8 +4,10 @@
   "description": "An attempt to simulation convection flow by modeling expanding 'balls' of gas",
   "main": "app.js",
   "scripts": {
-    "build": "tsc && npx webpack --config webpack.config.js --mode=production",
-    "dev": "node dist/app.js"
+    "full": "npm run lint && npm run build",
+    "build": "tsc && npm run webpack",
+    "webpack": "npx webpack --config webpack.config.js --mode=production",
+    "lint": "tslint -c tslint.json src/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -14,6 +16,7 @@
   "author": "Rupert Foggo McKay",
   "license": "ISC",
   "devDependencies": {
+    "tslint": "^6.0.0",
     "typescript": "^3.8.2",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11"
