@@ -1,0 +1,19 @@
+{
+  "name": "convection-model",
+  "version": "1.0.0",
+  "description": "An attempt to simulation convection flow by modeling expanding 'balls' of gas",
+  "main": "app.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "node dist/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.expedia.biz:rumckay/convection-model.git"
+  },
+  "author": "Rupert Foggo McKay",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^3.8.2"
+  }
+}
