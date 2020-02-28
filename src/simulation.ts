@@ -9,7 +9,7 @@ export class Simulation {
 
     constructor() {
         this.canvas = new Canvas();
-        this.bubbles = Bubble.createRandomBubbles(500);
+        this.bubbles = Bubble.createRandomBubbles(300);
         this.previousTime = performance.now();
         this.lag = 0;
     }

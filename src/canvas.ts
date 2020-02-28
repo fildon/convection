@@ -28,7 +28,7 @@ export class Canvas {
             bubble.heat,
             0, 2 * Math.PI
         );
-        this.ctx.fillStyle = bubble.colour;
+        this.ctx.fillStyle = bubble.outerColour;
         this.ctx.fill();
 
         if (bubble.heat > 3) {
@@ -39,7 +39,7 @@ export class Canvas {
                 bubble.heat - 3,
                 0, 2 * Math.PI
             );
-            this.ctx.fillStyle = 'black';
+            this.ctx.fillStyle = bubble.innerColour;
             this.ctx.fill();
         }
     }

@@ -4,7 +4,8 @@ export class Bubble {
     public position: Vector;
     public velocity: Vector;
     public heat: number;
-    public colour = 'blue';
+    public outerColour = 'blue';
+    public innerColour = 'black';
     private static gravity = new Vector(0, 0.15);
 
     public static createRandomBubbles(n: number): Bubble[] {
@@ -25,6 +26,7 @@ export class Bubble {
         this.position = position;
         this.velocity = new Vector(0, 0);
         this.heat = 20;
+        this.updateInnerColour();
     }
 
     public updateVelocity(bubbles: Bubble[]): void {
@@ -35,11 +37,11 @@ export class Bubble {
 
     public updatePosition(): void {
         this.applyVelocity();
-        // this.applyBrownian();
     }
 
     public heatUp(): void {
         this.heat += 0.1;
+        this.updateInnerColour();
     }
 
     public coolDown(): void {
@@ -47,17 +49,24 @@ export class Bubble {
             return;
         }
         this.heat -= 0.1;
+        this.updateInnerColour();
+    }
+
+    private updateInnerColour(): void {
+        let hue = 235 - 8 * this.heat;
+        hue = hue < 0 ? 0 : hue;
+        this.innerColour = `hsl(${hue}, 100%, 50%)`;
     }
 
     private applyBubbleBounce(bubbles: Bubble[]): void {
-        this.colour = 'blue';
+        this.outerColour = 'blue';
         bubbles.forEach(bubble => {
             if (this === bubble) {
                 return;
             }
             if (this.position.distanceTo(bubble.position) < this.heat + bubble.heat) {
                 this.repelFrom(bubble.position);
-                this.colour = 'red';
+                this.outerColour = 'red';
             }
         });
     }
@@ -74,14 +83,6 @@ export class Bubble {
     private applyVelocity(): void {
         this.position = this.position.add(this.velocity);
         this.velocity = this.velocity.scaleBy(0.99);
-    }
-
-    private applyBrownian(): void {
-        const brownian = new Vector(
-            5 * (Math.random() - 0.5),
-            5 * (Math.random() - 0.5)
-        );
-        this.position = this.position.add(brownian);
     }
 
     private applyWallBounce(): void {
