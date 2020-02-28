@@ -44,7 +44,7 @@ export class Simulation {
         this.bubbles.sort((a, b) => {
             return a.position.y - b.position.y;
         });
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < this.bubbles.length / 20; i++) {
             this.bubbles[i].coolDown();
             this.bubbles[this.bubbles.length - 1 - i].heatUp();
         }
