@@ -4,7 +4,7 @@ export class Bubble {
     public position: Vector;
     public velocity: Vector;
     public heat: number;
-    private static gravity = new Vector(0, 0.1);
+    private static gravity = new Vector(0, 0.15);
 
     public static createRandomBubbles(n: number): Bubble[] {
         const bubbles: Bubble[] = [];
@@ -26,13 +26,28 @@ export class Bubble {
         this.heat = 20;
     }
 
-    public update(): void {
-        // TODO wall repulsion/clipping
-        // TODO bubble repulsion -> velocity
+    public update(bubbles: Bubble[]): void {
+        this.applyBubbleBounce(bubbles);
         this.applyGravity();
         this.applyVelocity();
         this.applyBrownian();
         this.applyWallBounce();
+    }
+
+    private applyBubbleBounce(bubbles: Bubble[]): void {
+        bubbles.forEach(bubble => {
+            if (this === bubble) {
+                return;
+            }
+            if (this.position.distanceTo(bubble.position) < this.heat + bubble.heat) {
+                this.repelFrom(bubble.position);
+            }
+        });
+    }
+
+    private repelFrom(position: Vector): void {
+        const repulsionVector = position.vectorTo(this.position).scaleBy(0.1);
+        this.velocity = this.velocity.add(repulsionVector);
     }
 
     private applyGravity(): void {
