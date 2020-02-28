@@ -7,12 +7,17 @@ export class Canvas {
     constructor() {
         this.canvas = document.getElementById("canvas") as HTMLCanvasElement;
         this.ctx = this.canvas.getContext("2d")!;
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
+        this.setScreenSize();
     }
 
     public draw(bubbles: Bubble[]): void {
+        this.setScreenSize();
         bubbles.forEach(bubble => this.drawBubble(bubble));
+    }
+
+    private setScreenSize(): void {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
     }
 
     private drawBubble(bubble: Bubble): void {
@@ -21,7 +26,7 @@ export class Canvas {
         this.ctx.arc(
             bubble.position.x,
             bubble.position.y,
-            20,
+            bubble.heat,
             0, 2 * Math.PI
         );
         this.ctx.fillStyle = 'red';

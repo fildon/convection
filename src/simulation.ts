@@ -37,6 +37,7 @@ export class Simulation {
 
     private updateSimulation(): void {
         this.bubbles.forEach(bubble => bubble.update());
+        // TODO apply heat
     }
 
     private renderSimulation(): void {

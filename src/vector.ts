@@ -4,7 +4,7 @@ export class Vector {
         public readonly y: number
     ) {}
 
-    public translate(xDiff: number, yDiff: number): Vector {
-        return new Vector(this.x + xDiff, this.y + yDiff);
+    public add(other: Vector): Vector {
+        return new Vector(this.x + other.x, this.y + other.y);
     }
 }
