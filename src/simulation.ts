@@ -8,10 +8,7 @@ export class Simulation {
 
     constructor() {
         this.canvas = new Canvas();
-        this.bubbles = [new Bubble(new Vector(
-                window.innerWidth / 2,
-                window.innerHeight / 2
-        ))];
+        this.bubbles = Bubble.createRandomBubbles(10);
     }
 
     public start(): void {
@@ -24,9 +21,9 @@ export class Simulation {
         previousTime = currentTime
         lag += elapsed;
 
-        while (lag >= 1000/60) {
+        while (lag >= 1000/30) {
             this.updateSimulation();
-            lag -= 1000/60;
+            lag -= 1000/30;
         }
 
         this.renderSimulation();

@@ -4,6 +4,22 @@ export class Bubble {
     public position: Vector;
     public velocity: Vector;
     public heat: number;
+    private static gravity = new Vector(0, 0.1);
+
+    public static createRandomBubbles(n: number): Bubble[] {
+        const bubbles: Bubble[] = [];
+        for (let i = 0; i < n; i++) {
+            bubbles.push(Bubble.createRandomBubble());
+        }
+        return bubbles;
+    }
+
+    public static createRandomBubble(): Bubble {
+        const randomX = window.innerWidth * Math.random();
+        const randomY = window.innerHeight * Math.random();
+        return new Bubble(new Vector(randomX, randomY));
+    }
+
     constructor(position: Vector) {
         this.position = position;
         this.velocity = new Vector(0, 0);
@@ -14,14 +30,13 @@ export class Bubble {
         // TODO wall repulsion/clipping
         // TODO bubble repulsion -> velocity
         this.applyGravity();
-        // TODO apply velocity to position
         this.applyVelocity();
-        // TODO decay momentum?
         this.applyBrownian();
+        this.applyWallBounce();
     }
 
     private applyGravity(): void {
-        this.velocity = this.velocity.add(new Vector(0, 0.1));
+        this.velocity = this.velocity.add(Bubble.gravity);
     }
 
     private applyVelocity(): void {
@@ -34,5 +49,51 @@ export class Bubble {
             5 * (Math.random() - 0.5)
         );
         this.position = this.position.add(brownian);
+    }
+
+    private applyWallBounce(): void {
+        // left wall
+        if (this.position.x < 0) {
+            const xDiff = -2 * this.position.x;
+            this.position = this.position.add(new Vector(
+                xDiff, 0
+            ));
+            if (this.velocity.x < 0) {
+                this.velocity = new Vector(-this.velocity.x, this.velocity.y);
+            }
+        }
+
+        // top wall
+        if (this.position.y < 0) {
+            const yDiff = -2 * this.position.y;
+            this.position = this.position.add(new Vector(
+                0, yDiff
+            ));
+            if (this.velocity.y < 0) {
+                this.velocity = new Vector(this.velocity.x, -this.velocity.y);
+            }
+        }
+
+        // right wall
+        if (this.position.x > window.innerWidth) {
+            const xDiff = -2 * (this.position.x - window.innerWidth);
+            this.position = this.position.add(new Vector(
+                xDiff, 0
+            ));
+            if (this.velocity.x > 0) {
+                this.velocity = new Vector(-this.velocity.x, this.velocity.y);
+            }
+        }
+
+        // bottom wall
+        if (this.position.y > window.innerHeight) {
+            const yDiff = -2 * (this.position.y - window.innerHeight);
+            this.position = this.position.add(new Vector(
+                0, yDiff
+            ));
+            if (this.velocity.y > 0) {
+                this.velocity = new Vector(this.velocity.x, -this.velocity.y);
+            }
+        }
     }
 }
