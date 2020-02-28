@@ -30,5 +30,17 @@ export class Canvas {
         );
         this.ctx.fillStyle = bubble.colour;
         this.ctx.fill();
+
+        if (bubble.heat > 3) {
+            this.ctx.beginPath();
+            this.ctx.arc(
+                bubble.position.x,
+                bubble.position.y,
+                bubble.heat - 3,
+                0, 2 * Math.PI
+            );
+            this.ctx.fillStyle = 'black';
+            this.ctx.fill();
+        }
     }
 }
