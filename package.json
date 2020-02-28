@@ -4,7 +4,7 @@
   "description": "An attempt to simulation convection flow by modeling expanding 'balls' of gas",
   "main": "app.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npx webpack --config webpack.config.js --mode=production",
     "dev": "node dist/app.js"
   },
   "repository": {
@@ -14,6 +14,8 @@
   "author": "Rupert Foggo McKay",
   "license": "ISC",
   "devDependencies": {
-    "typescript": "^3.8.2"
+    "typescript": "^3.8.2",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
   }
 }
