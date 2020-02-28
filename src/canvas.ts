@@ -28,7 +28,7 @@ export class Canvas {
             bubble.heat,
             0, 2 * Math.PI
         );
-        this.ctx.fillStyle = 'red';
+        this.ctx.fillStyle = bubble.colour;
         this.ctx.fill();
     }
 }

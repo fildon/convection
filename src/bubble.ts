@@ -4,6 +4,7 @@ export class Bubble {
     public position: Vector;
     public velocity: Vector;
     public heat: number;
+    public colour = 'blue';
     private static gravity = new Vector(0, 0.15);
 
     public static createRandomBubbles(n: number): Bubble[] {
@@ -26,27 +27,43 @@ export class Bubble {
         this.heat = 20;
     }
 
-    public update(bubbles: Bubble[]): void {
+    public updateVelocity(bubbles: Bubble[]): void {
         this.applyBubbleBounce(bubbles);
         this.applyGravity();
-        this.applyVelocity();
-        this.applyBrownian();
         this.applyWallBounce();
     }
 
+    public updatePosition(): void {
+        this.applyVelocity();
+        // this.applyBrownian();
+    }
+
+    public heatUp(): void {
+        this.heat += 0.1;
+    }
+
+    public coolDown(): void {
+        if (this.heat < 0.1) {
+            return;
+        }
+        this.heat -= 0.1;
+    }
+
     private applyBubbleBounce(bubbles: Bubble[]): void {
+        this.colour = 'blue';
         bubbles.forEach(bubble => {
             if (this === bubble) {
                 return;
             }
             if (this.position.distanceTo(bubble.position) < this.heat + bubble.heat) {
                 this.repelFrom(bubble.position);
+                this.colour = 'red';
             }
         });
     }
 
     private repelFrom(position: Vector): void {
-        const repulsionVector = position.vectorTo(this.position).scaleBy(0.1);
+        const repulsionVector = position.vectorTo(this.position).scaleBy(0.05);
         this.velocity = this.velocity.add(repulsionVector);
     }
 
@@ -56,6 +73,7 @@ export class Bubble {
 
     private applyVelocity(): void {
         this.position = this.position.add(this.velocity);
+        this.velocity = this.velocity.scaleBy(0.99);
     }
 
     private applyBrownian(): void {
