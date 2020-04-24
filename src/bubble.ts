@@ -4,8 +4,7 @@ export class Bubble {
   public position: Vector;
   public velocity: Vector;
   public heat: number;
-  public outerColour = 'blue';
-  public innerColour = 'black';
+  public colour = 'black';
   private static gravity = new Vector(0, 0.15);
 
   public static createRandomBubbles(n: number): Bubble[] {
@@ -26,7 +25,7 @@ export class Bubble {
     this.position = position;
     this.velocity = new Vector(0, 0);
     this.heat = 20;
-    this.updateInnerColour();
+    this.updateColour();
   }
 
   public updateVelocity(bubbles: Bubble[]): void {
@@ -41,7 +40,7 @@ export class Bubble {
 
   public heatUp(): void {
     this.heat += 0.1;
-    this.updateInnerColour();
+    this.updateColour();
   }
 
   public coolDown(): void {
@@ -49,24 +48,22 @@ export class Bubble {
       return;
     }
     this.heat -= 0.1;
-    this.updateInnerColour();
+    this.updateColour();
   }
 
-  private updateInnerColour(): void {
+  private updateColour(): void {
     let hue = 235 - 8 * this.heat;
     hue = hue < 0 ? 0 : hue;
-    this.innerColour = `hsl(${hue}, 100%, 50%)`;
+    this.colour = `hsl(${hue}, 100%, 50%)`;
   }
 
   private applyBubbleBounce(bubbles: Bubble[]): void {
-    this.outerColour = 'blue';
     bubbles.forEach(bubble => {
       if (this === bubble) {
         return;
       }
       if (this.position.distanceTo(bubble.position) < this.heat + bubble.heat) {
         this.repelFrom(bubble.position);
-        this.outerColour = 'red';
       }
     });
   }

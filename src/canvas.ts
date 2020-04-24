@@ -21,16 +21,6 @@ export class Canvas {
   }
 
   private drawBubble(bubble: Bubble): void {
-    this.ctx.beginPath();
-    this.ctx.arc(
-      bubble.position.x,
-      bubble.position.y,
-      bubble.heat,
-      0, 2 * Math.PI
-    );
-    this.ctx.fillStyle = bubble.outerColour;
-    this.ctx.fill();
-
     if (bubble.heat > 3) {
       this.ctx.beginPath();
       this.ctx.arc(
@@ -39,7 +29,7 @@ export class Canvas {
         bubble.heat - 3,
         0, 2 * Math.PI
       );
-      this.ctx.fillStyle = bubble.innerColour;
+      this.ctx.fillStyle = bubble.colour;
       this.ctx.fill();
     }
   }
