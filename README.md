@@ -1,6 +1,6 @@
 Setup instructions:
-- npm install
-- npm run build
+- yarn install
+- yarn run build
 - open index.html
 
 Aim:
