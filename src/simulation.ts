@@ -1,5 +1,6 @@
 import { Bubble } from "./bubble";
 import { Canvas } from "./canvas";
+import { take, takeRight } from "lodash"
 
 export class Simulation {
   private readonly canvas: Canvas;
@@ -44,11 +45,11 @@ export class Simulation {
     this.bubbles.sort((a, b) => {
       return a.position.y - b.position.y;
     });
-    const warmBubbles = this.bubbles.filter(bubble => bubble.heat > 2)
-    for (let i = 0; i < warmBubbles.length / 20; i++) {
-      warmBubbles[i].coolDown();
-      warmBubbles[warmBubbles.length - 1 - i].heatUp();
-    }
+    const groupSize = this.bubbles.length / 20
+    const highestGroup = take(this.bubbles.filter(bubble => bubble.heat > 10), groupSize)
+    const lowestGroup = takeRight(this.bubbles, groupSize)
+    highestGroup.forEach(bubble => bubble.coolDown())
+    lowestGroup.forEach(bubble => bubble.heatUp())
   }
 
   private renderSimulation(): void {
