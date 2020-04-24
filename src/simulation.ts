@@ -44,9 +44,10 @@ export class Simulation {
     this.bubbles.sort((a, b) => {
       return a.position.y - b.position.y;
     });
-    for (let i = 0; i < this.bubbles.length / 20; i++) {
-      this.bubbles[i].coolDown();
-      this.bubbles[this.bubbles.length - 1 - i].heatUp();
+    const warmBubbles = this.bubbles.filter(bubble => bubble.heat > 2)
+    for (let i = 0; i < warmBubbles.length / 20; i++) {
+      warmBubbles[i].coolDown();
+      warmBubbles[warmBubbles.length - 1 - i].heatUp();
     }
   }
 
